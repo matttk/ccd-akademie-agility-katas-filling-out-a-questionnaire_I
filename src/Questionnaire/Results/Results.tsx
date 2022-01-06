@@ -1,11 +1,19 @@
+import { Question } from "../Questions/Questions";
 import { Answers } from "./Answers";
 import { Summary } from "./Summary";
 
-function Results(): JSX.Element {
+interface ResultsProps {
+  questions: Array<Question>;
+  answers: Array<string | undefined>;
+}
+
+function Results(props: ResultsProps): JSX.Element {
+  const { questions, answers } = props;
+
   return (
     <div className="Results">
-      <Summary />
-      <Answers />
+      <Summary questions={questions} answers={answers} />
+      <Answers questions={questions} answers={answers} />
     </div>
   );
 }

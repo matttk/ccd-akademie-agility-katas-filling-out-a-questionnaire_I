@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { FormGroup, Input, Label } from "reactstrap";
 
 export type Question = {
@@ -7,27 +6,20 @@ export type Question = {
   choices: Array<QuestionChoice>;
 };
 
-type QuestionChoice = {
+export type QuestionChoice = {
   label: string;
   value: string;
+  correct?: boolean;
 };
 
 interface QuestionsProps {
   questions: Array<Question>;
+  answers: Array<string | undefined>;
+  onChangeAnswer: Function;
 }
 
 function Questions(props: QuestionsProps): JSX.Element {
-  const { questions } = props;
-  const [values, setValues] = useState<Array<string | undefined>>(
-    Array(questions.length)
-  );
-
-  function handleChange(index: number, value: string) {
-    const newValues = [...values];
-
-    newValues[index] = value;
-    setValues(newValues);
-  }
+  const { questions, answers, onChangeAnswer } = props;
 
   return (
     <div className="Questions">
@@ -37,8 +29,8 @@ function Questions(props: QuestionsProps): JSX.Element {
           label={question.label}
           name={question.name}
           choices={question.choices}
-          selectedChoice={values[index]}
-          onChange={(value: string) => handleChange(index, value)}
+          selectedChoice={answers[index]}
+          onChange={(value: string) => onChangeAnswer(index, value)}
         />
       ))}
     </div>
