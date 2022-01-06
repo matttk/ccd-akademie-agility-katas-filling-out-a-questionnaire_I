@@ -13,9 +13,11 @@ function Questionnaire(): JSX.Element {
       ],
     },
   ];
+  const title: string = "Questionnaire";
 
   return (
     <div className="Questionnaire">
+      <h1>{title}</h1>
       <Questions questions={questions} />
       <Results />
       <Controls />
