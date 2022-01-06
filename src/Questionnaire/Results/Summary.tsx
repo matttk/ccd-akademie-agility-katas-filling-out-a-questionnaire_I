@@ -1,6 +1,4 @@
-import React from "react";
-
-function Summary() {
+function Summary(): JSX.Element {
   return <div className="Summary">summary</div>;
 }
 

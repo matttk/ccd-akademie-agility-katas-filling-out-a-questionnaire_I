@@ -1,6 +1,4 @@
-import React from "react";
-
-function Answers() {
+function Answers(): JSX.Element {
   return <div className="Answers">answers</div>;
 }
 

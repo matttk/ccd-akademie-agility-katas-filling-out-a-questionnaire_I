@@ -1,9 +1,9 @@
 import { Controls } from "./Controls/Controls";
-import { Questions } from "./Questions/Questions";
+import { Question, Questions } from "./Questions/Questions";
 import { Results } from "./Results/Results";
 
-function Questionnaire() {
-  const questions = [
+function Questionnaire(): JSX.Element {
+  const questions: Array<Question> = [
     {
       label: "this is a question?",
       name: "question1",

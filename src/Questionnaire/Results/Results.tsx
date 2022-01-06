@@ -1,9 +1,7 @@
-import React from "react";
-
 import { Answers } from "./Answers";
 import { Summary } from "./Summary";
 
-function Results() {
+function Results(): JSX.Element {
   return (
     <div className="Results">
       <Summary />

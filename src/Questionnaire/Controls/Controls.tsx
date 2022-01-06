@@ -1,6 +1,4 @@
-import React from "react";
-
-function Controls() {
+function Controls(): JSX.Element {
   return <div className="Controls">controls</div>;
 }
 

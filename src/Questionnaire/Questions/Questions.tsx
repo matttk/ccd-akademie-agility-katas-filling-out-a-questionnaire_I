@@ -1,10 +1,28 @@
 import { useState } from "react";
 import { FormGroup, Input, Label } from "reactstrap";
 
-function Questions({ questions }) {
-  const [values, setValues] = useState([]);
+export type Question = {
+  label: string;
+  name: string;
+  choices: Array<QuestionChoice>;
+};
 
-  function handleChange(index, value) {
+type QuestionChoice = {
+  label: string;
+  value: string;
+};
+
+interface QuestionsProps {
+  questions: Array<Question>;
+}
+
+function Questions(props: QuestionsProps): JSX.Element {
+  const { questions } = props;
+  const [values, setValues] = useState<Array<string | undefined>>(
+    Array(questions.length)
+  );
+
+  function handleChange(index: number, value: string) {
     const newValues = [...values];
 
     newValues[index] = value;
@@ -14,20 +32,30 @@ function Questions({ questions }) {
   return (
     <div className="Questions">
       {questions.map((question, index) => (
-        <Question
+        <SingleQuestion
           key={question.name}
           label={question.label}
           name={question.name}
           choices={question.choices}
           selectedChoice={values[index]}
-          onChange={(value) => handleChange(index, value)}
+          onChange={(value: string) => handleChange(index, value)}
         />
       ))}
     </div>
   );
 }
 
-function Question({ label, name, choices, selectedChoice, onChange }) {
+interface SingleQuestionProps {
+  label: string;
+  name: string;
+  choices: Array<QuestionChoice>;
+  selectedChoice?: string;
+  onChange: Function;
+}
+
+function SingleQuestion(props: SingleQuestionProps): JSX.Element {
+  const { label, name, choices, selectedChoice, onChange } = props;
+
   return (
     <FormGroup tag="fieldset">
       <legend>{label}</legend>
