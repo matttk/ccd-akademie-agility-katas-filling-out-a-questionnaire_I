@@ -35,7 +35,7 @@ function Questionnaire(): JSX.Element {
     setShowAnswers(true);
   }
 
-  const title: string = "Questionnaire";
+  const title: string = !showAnswers ? "Questionnaire" : "Your score";
 
   return (
     <div className="Questionnaire">
