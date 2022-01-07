@@ -2,30 +2,26 @@ import { useEffect, useState } from "react";
 
 import { Controls } from "./Controls/Controls";
 import { getFileData } from "./data/FileProvider";
+import { parseQuestions } from "./data/QuestionParser";
 import { Question, Questions } from "./Questions/Questions";
 import { Results } from "./Results/Results";
 
-const questions: Array<Question> = [
-  {
-    label: "this is a question?",
-    name: "question1",
-    choices: [
-      { value: "opt1", label: "option 1" },
-      { value: "opt2", label: "option 2", correct: true },
-    ],
-  },
-];
-
 function Questionnaire(): JSX.Element {
   const [showAnswers, setShowAnswers] = useState<boolean>(false);
+  const [questions, setQuestions] = useState<Array<Question>>([]);
   const [answers, setAnswers] = useState<Array<string | undefined>>(
     Array(questions.length)
   );
 
   useEffect(() => {
-    const fileData: Array<string> | null = getFileData();
-    
-    console.log(fileData);
+    getFileData()
+      .then((fileData) => {
+        const questions = parseQuestions(fileData);
+        setQuestions(questions);
+      })
+      .catch(() => {
+        // no defined error state for this exercise
+      });
   }, []);
 
   function handleChangeAnswer(index: number, value: string) {

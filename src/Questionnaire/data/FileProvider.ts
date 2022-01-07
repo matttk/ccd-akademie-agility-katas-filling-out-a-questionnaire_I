@@ -1,30 +1,26 @@
-import fs from "fs";
-
 const FILENAME = "Questionnaire.txt";
 
-function getFileData(): Array<string> | null {
-  const filePath: string = getFilePath();
-  const fileData: string | null = readFile(filePath);
+function getFileData(): Promise<Array<string>> {
+  const fileLocation: string = getFileLocation();
 
-  if (fileData) {
-    return splitStringByNewlines(fileData);
-  }
-
-  return null;
+  return fetchFile(fileLocation)
+    .then((fileData) => {
+      return splitStringByNewlines(fileData);
+    })
+    .catch(() => {
+      console.error(`Unable to read file ${fileLocation}`);
+      return Promise.reject();
+    });
 }
 
-function getFilePath(): string {
-  return `./${FILENAME}`;
+function getFileLocation(): string {
+  return `/${FILENAME}`;
 }
 
-function readFile(filepath: string): string | null {
-  try {
-    return fs.readFileSync(filepath, "utf8");
-  } catch (err) {
-    console.error(`Unable to read file ${filepath}`);
-  }
-
-  return null;
+async function fetchFile(fileLocation: string): Promise<string> {
+  return fetch(fileLocation).then((response) => {
+    return response.text();
+  });
 }
 
 function splitStringByNewlines(string: string): Array<string> {
