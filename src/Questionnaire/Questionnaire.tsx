@@ -16,6 +16,7 @@ const questions: Array<Question> = [
 ];
 
 function Questionnaire(): JSX.Element {
+  const [showAnswers, setShowAnswers] = useState<boolean>(false);
   const [answers, setAnswers] = useState<Array<string | undefined>>(
     Array(questions.length)
   );
@@ -27,18 +28,24 @@ function Questionnaire(): JSX.Element {
     setAnswers(newValues);
   }
 
+  function handleShowResults() {
+    setShowAnswers(true);
+  }
+
   const title: string = "Questionnaire";
 
   return (
     <div className="Questionnaire">
       <h1>{title}</h1>
-      <Questions
-        questions={questions}
-        answers={answers}
-        onChangeAnswer={handleChangeAnswer}
-      />
-      <Results questions={questions} answers={answers} />
-      <Controls />
+      {!showAnswers && (
+        <Questions
+          questions={questions}
+          answers={answers}
+          onChangeAnswer={handleChangeAnswer}
+        />
+      )}
+      {showAnswers && <Results questions={questions} answers={answers} />}
+      {!showAnswers && <Controls onClickShowScore={handleShowResults} />}
     </div>
   );
 }
