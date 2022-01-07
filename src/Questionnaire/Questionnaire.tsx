@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Controls } from "./Controls/Controls";
+import { getFileData } from "./data/FileProvider";
 import { Question, Questions } from "./Questions/Questions";
 import { Results } from "./Results/Results";
 
@@ -20,6 +21,12 @@ function Questionnaire(): JSX.Element {
   const [answers, setAnswers] = useState<Array<string | undefined>>(
     Array(questions.length)
   );
+
+  useEffect(() => {
+    const fileData: Array<string> | null = getFileData();
+    
+    console.log(fileData);
+  }, []);
 
   function handleChangeAnswer(index: number, value: string) {
     const newValues = [...answers];
