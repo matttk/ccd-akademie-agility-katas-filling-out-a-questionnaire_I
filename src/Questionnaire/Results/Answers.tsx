@@ -35,21 +35,30 @@ function AnswerInfo(props: AnswerInfoProps): JSX.Element {
   );
 
   function getCorrectnessText(
+    question: Question,
     answer: string | undefined,
     isCorrect: boolean
   ): string {
-    if (isCorrect) {
-      return `Your answer '${answer}' is correct`;
+    const answerChoice: QuestionChoice | undefined = question.choices.find(
+      (choice) => choice.value === answer
+    );
+
+    if (!answerChoice) {
+      return `Unknown answer '${answer}' is wrong`;
     }
 
-    return `Your answer '${answer}' is wrong`;
+    if (isCorrect) {
+      return `Your answer '${answerChoice.label}' is correct`;
+    }
+
+    return `Your answer '${answerChoice.label}' is wrong`;
   }
 
   return (
     <div className="AnswerInfo">
       <p>{question.label}</p>
       <ul>
-        <li>{getCorrectnessText(answer, isAnswerCorrect)}</li>
+        <li>{getCorrectnessText(question, answer, isAnswerCorrect)}</li>
         {!isAnswerCorrect && !!correctChoice && (
           <li>Correct answer: '{correctChoice.label}'</li>
         )}
